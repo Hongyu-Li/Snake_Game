@@ -48,7 +48,7 @@ async function loadTruncatedMobileNet() {
 async function loadMyMobileNet() {
   console.log('Loading model......');
   try {
-    const model = await tf.loadLayersModel("../tfjs_model/model.json");
+    const model = await tf.loadLayersModel("./tfjs_model/model.json");
     console.log('Done loading pretrained model.');
     return model;
   } catch (err) {
