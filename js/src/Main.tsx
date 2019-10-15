@@ -21,13 +21,21 @@ export default class Main extends React.Component{
         this.intervalId = setInterval(()=> {
             this.draw();
             this.snake.move();
-        }, 300);
+        }, 200);
         document.addEventListener("keydown", this.handle_keydown)
 
         setInterval(()=> {
             if(this.snake.body[0].x === this.apple.body.x && this.snake.body[0].y === this.apple.body.y) {
                 this.snake.extend();
                 this.apple.regenerate(0, 0);
+            }
+            const ctx: CanvasRenderingContext2D= ((this.refs.canvas as any).getContext("2d")) as CanvasRenderingContext2D
+            const head = this.snake.body[0];
+            if(head.x < 0 || head.x > WIDTH || head.y < 0 || head.y > HEIGHT) {
+                clearInterval(this.intervalId);
+                ctx.fillStyle = WHITE;
+                ctx.font = "40px Courier"
+                ctx.fillText("Game Over", 200, 200)
             }
         }, 5)
     }
@@ -52,7 +60,6 @@ export default class Main extends React.Component{
         });
         ctx.fillStyle = RED;
         ctx.fillRect(this.apple.body.x, this.apple.body.y, CELL_WIDTH, CELL_HEIGHT);  
-
     }
 
     clear = () => {
@@ -73,10 +80,6 @@ export default class Main extends React.Component{
 
     turnDown = () => {
         this.snake.direction = DIRECTION.DOWN;
-    }
-
-    turnWrapper = () => {
-
     }
 
     render() {
