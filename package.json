@@ -10,7 +10,17 @@
   },
   "dependencies": {
     "@tensorflow/tfjs": "^1.2.8",
-    "vega-embed": "^3.0.0"
+    "@types/react": "^16.9.7",
+    "@types/react-dom": "^16.9.2",
+    "path": "^0.12.7",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4",
+    "vega-embed": "^3.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   },
   "scripts": {
     "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
