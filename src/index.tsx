@@ -26,7 +26,7 @@ import * as ui from './ui';
 
 // The number of classes we want to predict. In this example, we will be
 // predicting 4 classes for up, down, left, and right.
-const NUM_CLASSES = 4;
+const NUM_CLASSES = 5;
 
 // A webcam iterator that generates Tensors from the images from the webcam.
 let webcam;
@@ -41,7 +41,7 @@ let model;
 // we'll use as input to our classifier model.
 async function loadTruncatedMobileNet() {
   const mobilenet = await tf.loadLayersModel(
-      'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
+      'https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_1.0_224/model.json');
 
   // Return a model that outputs an internal activation.
   const layer = mobilenet.getLayer('conv_pw_13_relu');
@@ -51,7 +51,7 @@ async function loadTruncatedMobileNet() {
 async function loadMyMobileNet() {
   console.log('Loading model......');
   try {
-    const model = await tf.loadLayersModel("./tfjs_model/model.json");
+    const model = await tf.loadLayersModel("./tfjs_model_3/model.json");
     console.log('Done loading pretrained model.');
     return model;
   } catch (err) {
@@ -82,7 +82,8 @@ async function predict() {
 
     // Make a prediction through mobilenet, getting the internal activation of
     // the mobilenet model, i.e., "embeddings" of the input images.
-    const predictions = truncatedMobileNet.predict(img);
+    const tempPredictions = truncatedMobileNet.predict(img);
+    const predictions = model.predict(tempPredictions);
 
     // Make a prediction through our newly-trained model using the embeddings
     // from mobilenet as input.
@@ -104,14 +105,14 @@ async function predict() {
 async function getImage() {
   const img = await webcam.capture();
   const processedImg =
-      tf.tidy(() => img.expandDims(0).toFloat().div(127).sub(1));
+      tf.tidy(() => img.expandDims(0).toFloat().div(127.5).sub(1));
   img.dispose();
   return processedImg;
 }
 
 document.getElementById('predict').addEventListener('click', () => {
   isPredicting = true;
-  setInterval(()=>predict(), 20);
+  setInterval(()=>predict(), 100);
 });
 
 async function init() {
@@ -121,8 +122,8 @@ async function init() {
     console.log(e);
     document.getElementById('no-webcam').style.display = 'block';
   }
-  // truncatedMobileNet = await loadTruncatedMobileNet();
-  truncatedMobileNet = await loadMyMobileNet();
+  truncatedMobileNet = await loadTruncatedMobileNet();
+  model = await loadMyMobileNet();
 
   ui.init();
 
@@ -130,7 +131,8 @@ async function init() {
   // programs so the first time we collect data from the webcam it will be
   // quick.
   const screenShot = await webcam.capture();
-  truncatedMobileNet.predict(screenShot.expandDims(0));
+  const truncatedOutput = truncatedMobileNet.predict(screenShot.expandDims(0));
+  model.predict(truncatedOutput);
   screenShot.dispose();
 }
 
