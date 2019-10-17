@@ -55,29 +55,30 @@ export default class Panel extends React.Component {
   
     async getImage() {
       const img = await this.webcam.capture();
+      
       const processedImg =
-          tf.tidy(() => img.expandDims(0).toFloat().div(127).sub(1));
+          tf.tidy(() => img.expandDims(0).toFloat().div(127.5).sub(1));
       img.dispose();
       return processedImg;    
     }
   
     async predict() {
-      while (this.state.isPredicting) {
+      // while (this.state.isPredicting) {
         // Capture the frame from the webcam.
-        const img = await this.getImage();
-        // Make a prediction through mobilenet, getting the internal activation of
-        // the mobilenet model, i.e., "embeddings" of the input images.
-        const temp = this.mobilenet.predict(img) as tf.Tensor;
-        const predictions = this.model.predict(temp) as tf.Tensor;
+      const img = await this.getImage();
+      // Make a prediction through mobilenet, getting the internal activation of
+      // the mobilenet model, i.e., "embeddings" of the input images.
+      const temp = this.mobilenet.predict(img) as tf.Tensor;
+      const predictions = this.model.predict(temp) as tf.Tensor;
 
-        // Returns the index with the maximum probability. This number corresponds
-        // to the class the model thinks is the most probable given the input.
-        const predictedClass = predictions.as1D().argMax();
-        const classId = (await predictedClass.data())[0];
-        this.handleButton(classId);
-        img.dispose();
-        await tf.nextFrame();
-      }
+      // Returns the index with the maximum probability. This number corresponds
+      // to the class the model thinks is the most probable given the input.
+      const predictedClass = predictions.as1D().argMax();
+      const classId = (await predictedClass.data())[0];
+      this.handleButton(classId);
+      img.dispose();
+      await tf.nextFrame();
+      // }
     }
   
     handleButton(label: number) {
@@ -99,7 +100,11 @@ export default class Panel extends React.Component {
     play = () => {
       this.setState({
         isPredicting : true,
-      }, this.predict);
+      });
+
+      setInterval(() => {
+        this.predict();
+      }, 300);
     }
 
     render() {
