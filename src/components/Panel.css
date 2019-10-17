@@ -1,0 +1,54 @@
+#game-panel {
+    flex: 1;
+    margin: 20px;
+}
+  
+#name {
+text-align: left;
+}
+
+#webcam-controller {
+display: flex;
+margin-top: 20px;
+justify-content: space-between;
+}
+
+.scroll-btn > span {
+display: block;
+transform: rotateZ(90deg);
+}
+
+#direction-panel {
+display: flex;
+flex-direction: column;
+}
+
+#top-panel {
+display: flex;
+flex-direction: row;
+}
+
+#middle-panel {
+display: flex;
+flex-direction: row;
+}
+
+#bottom-panel {
+display: flex;
+flex-direction: row;
+}
+
+.fill {
+width: 50px;
+}
+
+#play {
+display: block;
+margin-top: 20px;
+}
+
+#webcam {
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}

@@ -1,45 +1,39 @@
 {
-  "name": "tfjs-examples-webcam-transfer-learning",
+  "name": "my-app",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
-  "license": "Apache-2.0",
   "private": true,
-  "engines": {
-    "node": ">=8.9.0"
-  },
   "dependencies": {
-    "@tensorflow/tfjs": "^1.2.8",
-    "@types/react": "^16.9.7",
-    "@types/react-dom": "^16.9.2",
-    "path": "^0.12.7",
+    "@tensorflow/tfjs": "1.2.8",
+    "@tensorflow/tfjs-data": "1.2.8",
+    "@types/jest": "24.0.19",
+    "@types/node": "12.11.1",
+    "@types/react": "16.9.7",
+    "@types/react-dom": "16.9.2",
+    "nes.css": "^2.2.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "ts-loader": "^6.2.0",
-    "typescript": "^3.6.4",
-    "vega-embed": "^3.0.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.2"
+    "react-scripts": "3.2.0",
+    "typescript": "3.6.4"
   },
   "scripts": {
-    "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
-    "build": "cross-env NODE_ENV=production parcel build index.html  --no-minify --public-url ./",
-    "link-local": "yalc link"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@babel/plugin-transform-runtime": "^7.1.0",
-    "babel-preset-env": "~1.6.1",
-    "clang-format": "~1.2.2",
-    "cross-env": "^5.1.6",
-    "parcel-bundler": "~1.10.3",
-    "yalc": "~1.0.0-pre.22"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "browserslist": [
-    "> 1%",
-    "ie >= 11",
-    "ios >= 10",
-    "android >= 6"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
