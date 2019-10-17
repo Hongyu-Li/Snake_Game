@@ -1,7 +1,7 @@
 import Body from './Body'
 import { CELL_WIDTH, CELL_HEIGHT } from './constant';
 export enum DIRECTION {
-    LEFT,UP,RIGHT,DOWN
+    LEFT, UP, RIGHT, DOWN
 }
 
 const LEFT = 37;
@@ -10,12 +10,18 @@ const UP = 38;
 const DOWN = 40;
 
 export class Snake {
-    body: Array<Body> = []
+    body: Array<Body> = [];
     direction: DIRECTION;
+    velocity: number;
     
     constructor() {
         this.body.push(new Body(0,0));
         this.direction = DIRECTION.DOWN;
+        this.velocity = 0;
+    }
+
+    start(velocity: number) {
+        this.velocity = velocity;
     }
 
     extend() {
@@ -27,10 +33,10 @@ export class Snake {
         const head = this.body[0];
         const {x, y}  = head;
         switch(this.direction) {
-            case DIRECTION.RIGHT: this.body[0].move(x+CELL_WIDTH, y); break;
-            case DIRECTION.LEFT: this.body[0].move(x-CELL_WIDTH, y); break;
-            case DIRECTION.DOWN: this.body[0].move(x, y+CELL_HEIGHT); break;
-            case DIRECTION.UP: this.body[0].move(x, y-CELL_HEIGHT); break;
+            case DIRECTION.RIGHT: this.body[0].move(x+CELL_WIDTH*this.velocity, y); break;
+            case DIRECTION.LEFT: this.body[0].move(x-CELL_WIDTH*this.velocity, y); break;
+            case DIRECTION.DOWN: this.body[0].move(x, y+CELL_HEIGHT*this.velocity); break;
+            case DIRECTION.UP: this.body[0].move(x, y-CELL_HEIGHT*this.velocity); break;
         }
     }
 
