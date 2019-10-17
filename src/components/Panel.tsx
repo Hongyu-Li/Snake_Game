@@ -3,16 +3,21 @@ import './Panel.css';
 import * as tf from '@tensorflow/tfjs';
 import * as tfd from '@tensorflow/tfjs-data';
 import {snake} from "./snake-game/Shared"
+import { inject, observer } from 'mobx-react';
+import GameStore from '../stores/gameStore';
 
-export default class Panel extends React.Component {
+interface GameProps {
+  game?: GameStore
+}
+
+@inject("game")
+@observer
+export default class Panel extends React.Component<GameProps> {
 
     webcam : any;
     model : tf.LayersModel;
     mobilenet: tf.LayersModel;
-  
-    state = {
-      isPredicting : false,
-    }
+
   
     componentDidMount() {
       this.init();
@@ -24,11 +29,9 @@ export default class Panel extends React.Component {
       } catch (e) {
         console.log(e);
       }
-      const screetshot = await this.webcam.capture();
       this.mobilenet = await this.loadTruncatedMobileNet();
       this.model = await this.loadAddonModel();
-      this.mobilenet.predict(screetshot.expandDims(0));
-      screetshot.dispose();
+      setInterval(()=> {this.predict()}, 300);
     }
 
     async loadTruncatedMobileNet() {
@@ -98,22 +101,13 @@ export default class Panel extends React.Component {
     }
   
     play = () => {
-      this.setState({
-        isPredicting : true,
-      });
-
-      setInterval(() => {
-        this.predict();
-      }, 300);
+      this.props.game.start();
+      snake.start(1);
     }
 
     render() {
         return(
             <div id="game-panel">
-                <div className="nes-field">
-                    <label htmlFor="name_field" id="name">Your name</label>
-                    <input type="text" id="name_field" className="nes-input"/>
-                </div>
                 <div id="webcam-controller">
                     <video autoPlay playsInline muted id="webcam" width="224" height="224"></video>
                 <div id="direction-panel">
@@ -132,7 +126,10 @@ export default class Panel extends React.Component {
                     </div>
                 </div>
                 </div>
-                <button className="nes-btn" onClick={this.play} id="play">Play</button>
+                <div className="col-container">
+                  <button className="nes-btn" onClick={this.shot} id="shot">Shot</button>
+                  <button className="nes-btn" onClick={this.play} id="play">Play</button>
+                </div>
             </div>
 
         )

@@ -45,7 +45,6 @@ export class Snake {
     }
 
     handle_keydown = (keyCode: number) => {
-        console.log(keyCode);
         switch(keyCode) {
             case LEFT: this.changeDirection(DIRECTION.LEFT); break;
             case UP: this.changeDirection(DIRECTION.UP); break;
@@ -61,5 +60,4 @@ export class Snake {
         }
         this.turn();
     }
-
 }

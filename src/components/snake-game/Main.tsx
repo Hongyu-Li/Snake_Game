@@ -1,5 +1,7 @@
 
+import { observer, inject } from 'mobx-react';
 import { Snake, DIRECTION } from './Snake';
+import GameStore from '../../stores/gameStore';
 import { Apple } from './apple';
 import React, {Component} from 'react';
 import {HEIGHT, WIDTH, CELL_WIDTH, CELL_HEIGHT} from './constant'
@@ -12,7 +14,13 @@ const RIGHT = 39;
 const UP = 38;
 const DOWN = 40;
 
-export default class Main extends React.Component{
+interface GameProps {
+    game?: GameStore
+}
+
+@inject("game")
+@observer
+export default class Main extends React.Component<GameProps> {
     snake: Snake =  snake;
     apple: Apple = apple
     intervalId: any;
@@ -27,16 +35,18 @@ export default class Main extends React.Component{
         setInterval(()=> {
             if(this.snake.body[0].x === this.apple.body.x && this.snake.body[0].y === this.apple.body.y) {
                 this.snake.extend();
+                this.props.game.addScore();
                 this.apple.regenerate(0, 0);
             }
             const ctx: CanvasRenderingContext2D= ((this.refs.canvas as any).getContext("2d")) as CanvasRenderingContext2D
             const head = this.snake.body[0];
-            // if(head.x < 0 || head.x > WIDTH || head.y < 0 || head.y > HEIGHT) {
-            //     clearInterval(this.intervalId);
-            //     ctx.fillStyle = WHITE;
-            //     ctx.font = "40px Courier"
-            //     ctx.fillText("Game Over", 200, 200)
-            // }
+            if(head.x < 0 || head.x > WIDTH || head.y < 0 || head.y > HEIGHT) {
+                clearInterval(this.intervalId);
+                ctx.fillStyle = WHITE;
+                ctx.font = "100px Press Start 2P";
+                ctx.fillText("Game Over", 200, 200);
+                this.props.game.isOver = true;
+            }
         }, 5)
     }
 

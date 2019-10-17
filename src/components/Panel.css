@@ -44,11 +44,20 @@ width: 50px;
 
 #play {
 display: block;
-margin-top: 20px;
+margin: 15px;
+}
+
+#shot {
+display: block;
+margin: 15px;
 }
 
 #webcam {
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+.col-container {
+    display: flex;
 }
