@@ -4,6 +4,7 @@ import * as tf from '@tensorflow/tfjs';
 import * as tfd from '@tensorflow/tfjs-data';
 import { inject, observer } from 'mobx-react';
 import GameStore from '../stores/gameStore';
+import * as faceapi from 'face-api.js';
 
 interface GameProps {
   game?: GameStore
@@ -12,14 +13,13 @@ interface GameProps {
 @inject("game")
 @observer
 export default class Panel extends React.Component<GameProps> {
-
     webcam : any;
     model : tf.LayersModel;
     mobilenet: tf.LayersModel;
 
-  
     componentDidMount() {
       this.init();
+      setInterval(() => {this.canvas()}, 300);
     }
   
     async init() {
@@ -31,6 +31,34 @@ export default class Panel extends React.Component<GameProps> {
       this.mobilenet = await this.loadTruncatedMobileNet();
       this.model = await this.loadAddonModel();
       setInterval(()=> {this.predict()}, 300);
+      await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights')
+      await faceapi.nets.faceLandmark68Net.loadFromUri('/weights')
+      await faceapi.nets.faceExpressionNet.loadFromUri('/weights')
+    }
+
+    async canvas() {
+      while (!this.props.game.isStart) {
+        console.log("enter");
+        const input = document.getElementById('webcam') as HTMLVideoElement
+        const canvas = document.getElementById('dummy_canvas') as HTMLCanvasElement
+        try {
+          const detectionsWithLandmarksAndExpressions = await faceapi.detectSingleFace(input).withFaceLandmarks().withFaceExpressions()
+          const displaySize = { width: input.width, height: input.height }
+          faceapi.matchDimensions(canvas, displaySize)
+          const resizedResults = faceapi.resizeResults(detectionsWithLandmarksAndExpressions, displaySize)
+          // draw detections into the canvas
+          faceapi.draw.drawDetections(canvas, resizedResults)
+          // draw the landmarks into the canvas
+          faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
+          const minProbability = 0.05
+          faceapi.draw.drawFaceExpressions(canvas, resizedResults, minProbability)
+          if (detectionsWithLandmarksAndExpressions.expressions.surprised > 0.9) {
+            this.play();
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
     }
 
     async loadTruncatedMobileNet() {
@@ -121,8 +149,8 @@ export default class Panel extends React.Component<GameProps> {
                   <button className="nes-btn" onClick={this.play} id="play">Play</button>
                   <button className="nes-btn" onClick={()=>this.props.game.restart("snake")} id="play">restart</button>
                 </div>
+                <canvas id="dummy_canvas" width="224" height="224" ></canvas>
             </div>
-
         )
     }
 }
