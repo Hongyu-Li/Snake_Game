@@ -127,7 +127,7 @@ export default class Panel extends React.Component<GameProps> {
                 </div>
                 </div>
                 <div className="col-container">
-                  <button className="nes-btn" onClick={this.shot} id="shot">Shot</button>
+                  <button className="nes-btn" id="shot">Shot</button>
                   <button className="nes-btn" onClick={this.play} id="play">Play</button>
                 </div>
             </div>
