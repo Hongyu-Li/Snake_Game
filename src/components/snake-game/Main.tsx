@@ -1,11 +1,7 @@
 
-import { observer, inject } from 'mobx-react';
 import { Snake, DIRECTION } from './Snake';
-import GameStore from '../../stores/gameStore';
 import { Apple } from './apple';
-import React, {Component} from 'react';
 import {HEIGHT, WIDTH, CELL_WIDTH, CELL_HEIGHT} from './constant'
-import {snake, apple} from "./Shared"
 const WHITE = "rgb(255,255,255)"
 const RED = "rgb(255,0,0)";
 const BLACK = "rgb(0,0,0)";
@@ -14,73 +10,60 @@ const RIGHT = 39;
 const UP = 38;
 const DOWN = 40;
 
-interface GameProps {
-    game?: GameStore
-}
 
-@inject("game")
-@observer
-export default class Main extends React.Component<GameProps> {
-    snake: Snake =  snake;
-    apple: Apple = apple
-    intervalId: any;
+export class Main{
+    snake: Snake;
+    apple: Apple;
+    drawIntervalId: NodeJS.Timeout;
+    collisionIntervalId: NodeJS.Timeout;
+    ctx: CanvasRenderingContext2D;
 
-    componentDidMount() {
-        this.intervalId = setInterval(()=> {
+    constructor() {
+        this.snake = new Snake();
+        this.snake.start(1);
+        this.apple = new Apple(200, 200);
+        this.ctx = (document.getElementById("canvas") as any).getContext("2d")
+    }
+
+    start = ():void => {
+        this.drawIntervalId = setInterval(()=> {
             this.draw();
             this.snake.move();
         }, 1000);
-        document.addEventListener("keydown", this.handle_keydown)
 
-        setInterval(()=> {
+        this.collisionIntervalId = setInterval(()=> {
             if(this.snake.body[0].x === this.apple.body.x && this.snake.body[0].y === this.apple.body.y) {
                 this.snake.extend();
-                this.props.game.addScore();
                 this.apple.regenerate(0, 0);
             }
-            const ctx: CanvasRenderingContext2D= ((this.refs.canvas as any).getContext("2d")) as CanvasRenderingContext2D
             const head = this.snake.body[0];
             if(head.x < 0 || head.x > WIDTH || head.y < 0 || head.y > HEIGHT) {
-                clearInterval(this.intervalId);
-                ctx.fillStyle = WHITE;
-                ctx.font = "100px Press Start 2P";
-                ctx.fillText("Game Over", 200, 200);
-                this.props.game.isOver = true;
+                this.ctx.fillStyle = WHITE;
+                this.ctx.font = "80px serif";
+                this.ctx.fillText("press restart ", 200, 250);
+                this.end();
             }
         }, 5)
     }
 
-    handle_keydown = (event: any) => {
-        snake.handle_keydown(event.keyCode)
+    handle_key = (keyCode: number): void => {
+        this.snake.handle_keydown(keyCode)
     }
 
-    draw = () => {
-        const ctx: CanvasRenderingContext2D= ((this.refs.canvas as any).getContext("2d")) as CanvasRenderingContext2D
-        ctx.clearRect(0,0,WIDTH, HEIGHT);
-        ctx.fillStyle = BLACK;
-        ctx.fillRect(0,0, WIDTH, HEIGHT);
-        ctx.fillStyle = WHITE;
+    draw = ():void => {
+        this.ctx.clearRect(0,0,WIDTH, HEIGHT);
+        this.ctx.fillStyle = BLACK;
+        this.ctx.fillRect(0,0, WIDTH, HEIGHT);
+        this.ctx.fillStyle = WHITE;
         this.snake.body.forEach(body => {
-            ctx.fillRect (body.x,body.y, CELL_WIDTH, CELL_HEIGHT);
+            this.ctx.fillRect (body.x,body.y, CELL_WIDTH, CELL_HEIGHT);
         });
-        ctx.fillStyle = RED;
-        ctx.fillRect(this.apple.body.x, this.apple.body.y, CELL_WIDTH, CELL_HEIGHT);  
+        this.ctx.fillStyle = RED;
+        this.ctx.fillRect(this.apple.body.x, this.apple.body.y, CELL_WIDTH, CELL_HEIGHT);  
     }
 
-    clear = () => {
-        clearInterval(this.intervalId);
-    }
-
-    render() {
-        return (
-            <div>
-                <canvas ref='canvas' width={WIDTH} height={HEIGHT}></canvas>
-                <button onClick={()=>snake.changeDirection(DIRECTION.RIGHT)}>RIGHT</button>
-                <button onClick={()=>snake.changeDirection(DIRECTION.LEFT)}>LEFT</button>
-                <button onClick={()=>snake.changeDirection(DIRECTION.UP)}>UP</button>
-                <button onClick={()=>snake.changeDirection(DIRECTION.RIGHT)}>DOWN</button>
-                <button onClick={this.clear}>Clear</button>
-            </div>
-        )
+    end = ():void => {
+        clearInterval(this.drawIntervalId);
+        clearInterval(this.collisionIntervalId)
     }
 }

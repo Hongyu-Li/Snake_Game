@@ -10,14 +10,12 @@ const UP = 38;
 const DOWN = 40;
 
 export class Snake {
-    body: Array<Body> = [];
+    body: Array<Body>;
     direction: DIRECTION;
     velocity: number;
     
     constructor() {
-        this.body.push(new Body(0,0));
-        this.direction = DIRECTION.DOWN;
-        this.velocity = 0;
+        this.clear();
     }
 
     start(velocity: number) {
@@ -59,5 +57,11 @@ export class Snake {
             this.body[i].y = this.body[i-1].y;
         }
         this.turn();
+    }
+
+    clear = () => {
+        this.body = [new Body(0,0)];
+        this.direction = DIRECTION.DOWN;
+        this.velocity = 0;
     }
 }

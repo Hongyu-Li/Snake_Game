@@ -2,7 +2,6 @@ import React from 'react';
 import './Panel.css';
 import * as tf from '@tensorflow/tfjs';
 import * as tfd from '@tensorflow/tfjs-data';
-import {snake} from "./snake-game/Shared"
 import { inject, observer } from 'mobx-react';
 import GameStore from '../stores/gameStore';
 
@@ -66,22 +65,14 @@ export default class Panel extends React.Component<GameProps> {
     }
   
     async predict() {
-      // while (this.state.isPredicting) {
-        // Capture the frame from the webcam.
       const img = await this.getImage();
-      // Make a prediction through mobilenet, getting the internal activation of
-      // the mobilenet model, i.e., "embeddings" of the input images.
       const temp = this.mobilenet.predict(img) as tf.Tensor;
       const predictions = this.model.predict(temp) as tf.Tensor;
 
-      // Returns the index with the maximum probability. This number corresponds
-      // to the class the model thinks is the most probable given the input.
       const predictedClass = predictions.as1D().argMax();
       const classId = (await predictedClass.data())[0];
       this.handleButton(classId);
       img.dispose();
-      await tf.nextFrame();
-      // }
     }
   
     handleButton(label: number) {
@@ -96,13 +87,12 @@ export default class Panel extends React.Component<GameProps> {
         })
         const button = document.getElementById(CONTROLS[label-1]);
         button.classList.add("is-primary");
-        snake.handle_keydown(CONTROL_CODES[label-1]);
+        this.props.game.handle_key(CONTROL_CODES[label-1]);
       }
     }
   
     play = () => {
-      this.props.game.start();
-      snake.start(1);
+      this.props.game.start("snake")
     }
 
     render() {
@@ -129,6 +119,7 @@ export default class Panel extends React.Component<GameProps> {
                 <div className="col-container">
                   <button className="nes-btn" id="shot">Shot</button>
                   <button className="nes-btn" onClick={this.play} id="play">Play</button>
+                  <button className="nes-btn" onClick={()=>this.props.game.restart("snake")} id="play">restart</button>
                 </div>
             </div>
 

@@ -1,20 +1,25 @@
 import React from 'react';
 import './App.css';
-import GameStore from './stores/gameStore'
-import RecordStore from './stores/recordStore'
+
 import Game from './components/Game'
 import Panel from './components/Panel'
 import Rank from './components/Rank'
 import {Provider} from 'mobx-react'
-
-const game = new GameStore();
-const record = new RecordStore();
+import {game, record} from './GlobalStore'
 
 export default class App extends React.Component {
+  ctx: CanvasRenderingContext2D;
+  
+  componentDidMount() {
+    this.ctx = (document.getElementById("canvas") as any).getContext("2d");
+    this.ctx.fillStyle =  "rgb(0,0,0)"
+    this.ctx.font = "48px serif";
+    this.ctx.fillText("Press Start", 280, 250);
+  }
+
   render() {
     return (
       <div className="App">
-        {/* Top */}
         <div id="status">
           <section className="nes-container with-title">
             <h3 className="title">Information</h3> 
