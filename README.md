@@ -2,35 +2,31 @@
 
 Are you working in a sitting position right now? Feeling pains about your stiff neck and tight shoulders? If so, you're gonna love our game! 
 
-<br>
 
-### How to play? 
+## How to play? 
 
 In this game, you have to use your head gestures to guide the snake to gain score as high as possible. 
 
 **[Placeholder] ONLINE DEMO URL** AND **VIDEO DEMO**
 
-<br>
 
-### Development Environment
+## Development Environment
 
 This demo was inspired by tensorflowjs [Pac-Man demo](https://www.tensorflow.org/js/demos/). 
 
 * Model: We used the idea of *transfer learning* to train the model with **Tensorflow 2.0** on [Colab](https://colab.research.google.com/). The training process and the architecture of the model could be found in `/src/Snake-Game-Alpha.ipynb`
 * UI: `Typescript ` + `React` + `Mobx`  
 
-<br>
 
-### TODO
+## TODO
 
--[ ] Deploy online
+- [ ] Deploy online
 
--[ ] Recognize hand gesture to start/restart the game
+- [ ] Recognize hand gesture to start/restart the game
 
--[ ] Prettier UI
+- [ ] Prettier UI
 
-<br>
 
-### Acknowledge
+## Acknowledge
 
 Code borrows heavily from [Pac-Man](https://github.com/tensorflow/tfjs-examples/tree/master/webcam-transfer-learning).
