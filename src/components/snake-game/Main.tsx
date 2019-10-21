@@ -2,6 +2,7 @@
 import { Snake, DIRECTION } from './Snake';
 import { Apple } from './apple';
 import {HEIGHT, WIDTH, CELL_WIDTH, CELL_HEIGHT} from './constant'
+import { game } from '../../GlobalStore';
 const WHITE = "rgb(255,255,255)"
 const RED = "rgb(255,0,0)";
 const BLACK = "rgb(0,0,0)";
@@ -65,5 +66,6 @@ export class Main{
     end = ():void => {
         clearInterval(this.drawIntervalId);
         clearInterval(this.collisionIntervalId)
+        game.quit();
     }
 }

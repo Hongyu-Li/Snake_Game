@@ -37,8 +37,9 @@ export default class Panel extends React.Component<GameProps> {
     }
 
     async canvas() {
-      while (!this.props.game.isStart) {
-        console.log("enter");
+      if(this.props.game.isStart){
+        return;
+      }
         const input = document.getElementById('webcam') as HTMLVideoElement
         const canvas = document.getElementById('dummy_canvas') as HTMLCanvasElement
         try {
@@ -58,7 +59,7 @@ export default class Panel extends React.Component<GameProps> {
         } catch (e) {
           console.log(e);
         }
-      }
+
     }
 
     async loadTruncatedMobileNet() {
@@ -120,7 +121,7 @@ export default class Panel extends React.Component<GameProps> {
     }
   
     play = () => {
-      this.props.game.start("snake")
+      this.props.game.restart("snake")
     }
 
     render() {

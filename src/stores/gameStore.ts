@@ -14,6 +14,7 @@ export default class GameStore {
 
     @action.bound start(game: string) {
         this.isStart = true;
+        this.isOver = false;
         this.Game = this.gameFactory(game);
         this.Game.start();
     }
@@ -27,8 +28,9 @@ export default class GameStore {
     }
 
     @action.bound restart(game: string) {
-        if(this.Game === null){
-            return 
+        if(!this.Game){
+            this.start(game);
+            return;
         }
         this.Game.end();
         this.Game = this.gameFactory(game);
@@ -40,6 +42,11 @@ export default class GameStore {
             return
         }
         this.Game.handle_key(keyCode);
+    }
+
+    @action.bound quit() {
+        this.isStart = false;
+        this.isOver = true;
     }
 
     gameFactory(game: string): Game {
