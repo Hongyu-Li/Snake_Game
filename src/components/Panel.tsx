@@ -19,7 +19,6 @@ export default class Panel extends React.Component<GameProps> {
 
     componentDidMount() {
       this.init();
-      setInterval(() => {this.canvas()}, 300);
     }
   
     async init() {
@@ -28,12 +27,20 @@ export default class Panel extends React.Component<GameProps> {
       } catch (e) {
         console.log(e);
       }
+      console.log("loading mobilenet...")
       this.mobilenet = await this.loadTruncatedMobileNet();
+      console.log("done loading mobilenet")
+      console.log("loading addon model...")
       this.model = await this.loadAddonModel();
-      setInterval(()=> {this.predict()}, 300);
+      console.log("done loading addon model")
+      console.log("loading face-api models...")
       await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights')
       await faceapi.nets.faceLandmark68Net.loadFromUri('/weights')
       await faceapi.nets.faceExpressionNet.loadFromUri('/weights')
+      console.log("done loading face-api model")
+      setInterval(()=> {this.predict()}, 300);
+      setInterval(() => {this.canvas()}, 300);
+      console.log()
     }
 
     async canvas() {
@@ -46,13 +53,13 @@ export default class Panel extends React.Component<GameProps> {
           const detectionsWithLandmarksAndExpressions = await faceapi.detectSingleFace(input).withFaceLandmarks().withFaceExpressions()
           const displaySize = { width: input.width, height: input.height }
           faceapi.matchDimensions(canvas, displaySize)
-          const resizedResults = faceapi.resizeResults(detectionsWithLandmarksAndExpressions, displaySize)
+          // const resizedResults = faceapi.resizeResults(detectionsWithLandmarksAndExpressions, displaySize)
           // draw detections into the canvas
-          faceapi.draw.drawDetections(canvas, resizedResults)
+          // faceapi.draw.drawDetections(canvas, resizedResults)
           // draw the landmarks into the canvas
-          faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
-          const minProbability = 0.05
-          faceapi.draw.drawFaceExpressions(canvas, resizedResults, minProbability)
+          // faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
+          // const minProbability = 0.05
+          // faceapi.draw.drawFaceExpressions(canvas, resizedResults, minProbability)
           if (detectionsWithLandmarksAndExpressions.expressions.surprised > 0.9) {
             this.play();
           }
