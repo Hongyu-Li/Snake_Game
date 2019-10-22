@@ -5,6 +5,7 @@ import * as tfd from '@tensorflow/tfjs-data';
 import { inject, observer } from 'mobx-react';
 import GameStore from '../stores/gameStore';
 import * as faceapi from 'face-api.js';
+import * as handTrack from 'handtrackjs';
 
 interface GameProps {
   game?: GameStore
@@ -29,11 +30,12 @@ export default class Panel extends React.Component<GameProps> {
       }
       this.mobilenet = await this.loadTruncatedMobileNet();
       this.model = await this.loadAddonModel();
-      await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights')
-      await faceapi.nets.faceLandmark68Net.loadFromUri('/weights')
-      await faceapi.nets.faceExpressionNet.loadFromUri('/weights')
+      // await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights');
+      // await faceapi.nets.faceLandmark68Net.loadFromUri('/weights');
+      // await faceapi.nets.faceExpressionNet.loadFromUri('/weights');
       setInterval(()=> {this.detectHeadDirection()}, 300);
-      setInterval(() => {this.detectMouse()}, 300);
+      // setInterval(() => {this.detectMouse()}, 300);
+      this.detectHands();
     }
 
     async detectMouse() {
@@ -52,7 +54,33 @@ export default class Panel extends React.Component<GameProps> {
         } catch (e) {
           console.log(e);
         }
+    }
 
+    detectHands() {
+      const video = document.getElementById('webcam');
+      const modelParams = {
+        flipHorizontal: false,   // flip e.g for video 
+        imageScaleFactor: 1,  // reduce input image size for gains in speed.
+        maxNumBoxes: 1,        // maximum number of boxes to detect
+        iouThreshold: 0.5,      // ioU threshold for non-max suppression
+        scoreThreshold: 0.5,    // confidence threshold for predictions.
+      }
+      // Load the model.
+      console.log("loading handtrack model......")
+      handTrack.load(modelParams).then(model => {
+        // detect objects in the image.
+        console.log("handtrack model loaded")
+        setInterval(() => {
+          if(this.props.game.isStart){
+            return;
+          }
+          model.detect(video).then(predictions => {
+            if (predictions.length !== 0) {
+              this.play();
+            }
+          });
+        }, 300);
+      });
     }
 
     async loadTruncatedMobileNet() {
