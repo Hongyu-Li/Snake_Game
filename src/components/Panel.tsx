@@ -27,23 +27,16 @@ export default class Panel extends React.Component<GameProps> {
       } catch (e) {
         console.log(e);
       }
-      console.log("loading mobilenet...")
       this.mobilenet = await this.loadTruncatedMobileNet();
-      console.log("done loading mobilenet")
-      console.log("loading addon model...")
       this.model = await this.loadAddonModel();
-      console.log("done loading addon model")
-      console.log("loading face-api models...")
       await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights')
       await faceapi.nets.faceLandmark68Net.loadFromUri('/weights')
       await faceapi.nets.faceExpressionNet.loadFromUri('/weights')
-      console.log("done loading face-api model")
-      setInterval(()=> {this.predict()}, 300);
-      setInterval(() => {this.canvas()}, 300);
-      console.log()
+      setInterval(()=> {this.detectHeadDirection()}, 300);
+      setInterval(() => {this.detectMouse()}, 300);
     }
 
-    async canvas() {
+    async detectMouse() {
       if(this.props.game.isStart){
         return;
       }
@@ -53,13 +46,6 @@ export default class Panel extends React.Component<GameProps> {
           const detectionsWithLandmarksAndExpressions = await faceapi.detectSingleFace(input).withFaceLandmarks().withFaceExpressions()
           const displaySize = { width: input.width, height: input.height }
           faceapi.matchDimensions(canvas, displaySize)
-          // const resizedResults = faceapi.resizeResults(detectionsWithLandmarksAndExpressions, displaySize)
-          // draw detections into the canvas
-          // faceapi.draw.drawDetections(canvas, resizedResults)
-          // draw the landmarks into the canvas
-          // faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
-          // const minProbability = 0.05
-          // faceapi.draw.drawFaceExpressions(canvas, resizedResults, minProbability)
           if (detectionsWithLandmarksAndExpressions.expressions.surprised > 0.9) {
             this.play();
           }
@@ -100,7 +86,7 @@ export default class Panel extends React.Component<GameProps> {
       return processedImg;    
     }
   
-    async predict() {
+    async detectHeadDirection() {
       const img = await this.getImage();
       const temp = this.mobilenet.predict(img) as tf.Tensor;
       const predictions = this.model.predict(temp) as tf.Tensor;
