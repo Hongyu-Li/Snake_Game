@@ -20,9 +20,11 @@ This demo was inspired by tensorflowjs [Pac-Man demo](https://www.tensorflow.org
 
 ## TODO
 
-- [ ] Deploy online
+- [x] Deploy online
 
-- [ ] Recognize hand gesture to start/restart the game
+- [x] Recognize hand gesture to start/restart the game
+
+- [ ] SSL Certificate (open camera without configuring chrome)
 
 - [ ] Prettier UI
 
