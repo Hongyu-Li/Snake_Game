@@ -15,8 +15,9 @@ interface GameProps {
 @observer
 export default class Panel extends React.Component<GameProps> {
     webcam : any;
-    model : tf.LayersModel;
+    headModel : tf.LayersModel;
     mobilenet: tf.LayersModel;
+    handModel: any;
 
     componentDidMount() {
       this.init();
@@ -29,13 +30,15 @@ export default class Panel extends React.Component<GameProps> {
         console.log(e);
       }
       this.mobilenet = await this.loadTruncatedMobileNet();
-      this.model = await this.loadAddonModel();
+      this.headModel = await this.loadAddonModel();
+      this.handModel = await this.loadHandTrackModel();
       // await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights');
       // await faceapi.nets.faceLandmark68Net.loadFromUri('/weights');
       // await faceapi.nets.faceExpressionNet.loadFromUri('/weights');
-      setInterval(()=> {this.detectHeadDirection()}, 300);
       // setInterval(() => {this.detectMouse()}, 300);
-      this.detectHands();
+      setInterval(()=> {this.detectHeadDirection()}, 300);
+      setInterval(()=> {this.detectHands()}, 300);
+      // setInterval(() => {this.detectMouse()}, 300);
     }
 
     async detectMouse() {
@@ -56,30 +59,26 @@ export default class Panel extends React.Component<GameProps> {
         }
     }
 
-    detectHands() {
-      const video = document.getElementById('webcam');
+    loadHandTrackModel() {
       const modelParams = {
         flipHorizontal: false,   // flip e.g for video 
         imageScaleFactor: 1,  // reduce input image size for gains in speed.
         maxNumBoxes: 1,        // maximum number of boxes to detect
         iouThreshold: 0.5,      // ioU threshold for non-max suppression
         scoreThreshold: 0.98,    // confidence threshold for predictions.
+      };
+      return handTrack.load(modelParams);
+    }
+
+    detectHands() {
+      if (this.props.game.isStart) {
+        return;
       }
-      // Load the model.
-      console.log("loading handtrack model......")
-      handTrack.load(modelParams).then(model => {
-        // detect objects in the image.
-        console.log("handtrack model loaded")
-        setInterval(() => {
-          if(this.props.game.isStart){
-            return;
-          }
-          model.detect(video).then(predictions => {
-            if (predictions.length !== 0) {
-              this.play();
-            }
-          });
-        }, 300);
+      const video = document.getElementById('webcam');
+      this.handModel.detect(video).then(predictions => {
+        if (predictions.length !== 0) {
+          this.play();
+        }
       });
     }
 
@@ -117,7 +116,7 @@ export default class Panel extends React.Component<GameProps> {
     async detectHeadDirection() {
       const img = await this.getImage();
       const temp = this.mobilenet.predict(img) as tf.Tensor;
-      const predictions = this.model.predict(temp) as tf.Tensor;
+      const predictions = this.headModel.predict(temp) as tf.Tensor;
 
       const predictedClass = predictions.as1D().argMax();
       const classId = (await predictedClass.data())[0];
