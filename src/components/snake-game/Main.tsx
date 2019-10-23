@@ -1,15 +1,11 @@
 
-import { Snake, DIRECTION } from './Snake';
+import { Snake } from './Snake';
 import { Apple } from './apple';
 import {HEIGHT, WIDTH, CELL_WIDTH, CELL_HEIGHT} from './constant'
 import { game } from '../../GlobalStore';
 const WHITE = "rgb(255,255,255)"
 const RED = "rgb(255,0,0)";
 const BLACK = "rgb(0,0,0)";
-const LEFT = 37;
-const RIGHT = 39;
-const UP = 38;
-const DOWN = 40;
 
 
 export class Main{
@@ -30,7 +26,7 @@ export class Main{
         this.drawIntervalId = setInterval(()=> {
             this.draw();
             this.snake.move();
-        }, 1000);
+        }, 500);
 
         this.collisionIntervalId = setInterval(()=> {
             if(this.snake.body[0].x === this.apple.body.x && this.snake.body[0].y === this.apple.body.y) {
@@ -40,8 +36,8 @@ export class Main{
             const head = this.snake.body[0];
             if(head.x < 0 || head.x > WIDTH || head.y < 0 || head.y > HEIGHT) {
                 this.ctx.fillStyle = WHITE;
-                this.ctx.font = "80px serif";
-                this.ctx.fillText("press restart ", 200, 250);
+                this.ctx.font = '20px "Press Start 2P"';
+                this.ctx.fillText("Hands Up to Restart", 150, 250);
                 this.end();
             }
         }, 5)

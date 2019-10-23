@@ -60,7 +60,7 @@ export class Snake {
     }
 
     clear = () => {
-        this.body = [new Body(0,0)];
+        this.body = [new Body(340,240)];
         this.direction = DIRECTION.DOWN;
         this.velocity = 0;
     }

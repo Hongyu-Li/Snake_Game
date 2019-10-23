@@ -13,8 +13,8 @@ export default class App extends React.Component {
   componentDidMount() {
     this.ctx = (document.getElementById("canvas") as any).getContext("2d");
     this.ctx.fillStyle =  "rgb(0,0,0)"
-    this.ctx.font = "48px serif";
-    this.ctx.fillText("Press Start", 280, 250);
+    this.ctx.font = '30px "Press Start 2P"';
+    this.ctx.fillText("Show Your Hand", 130, 280);
   }
 
   render() {
