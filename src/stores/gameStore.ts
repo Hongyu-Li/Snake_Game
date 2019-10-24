@@ -35,6 +35,7 @@ export default class GameStore {
         this.Game.end();
         this.Game = this.gameFactory(game);
         this.Game.start();
+        this.isStart = true;
     }
 
     @action.bound handle_key(keyCode: number) {
