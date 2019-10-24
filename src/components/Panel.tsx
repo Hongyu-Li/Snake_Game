@@ -6,12 +6,18 @@ import { inject, observer } from 'mobx-react';
 import GameStore from '../stores/gameStore';
 import * as faceapi from 'face-api.js';
 import * as handTrack from 'handtrackjs';
+import RecordStore from '../stores/recordStore';
+import resizeImageData from 'resize-image-data';
+import { WEBCAM_WIDTH, WEBCAM_HEIGHT } from './snake-game/constant';
+import { record } from '../GlobalStore';
 
 interface GameProps {
-  game?: GameStore
+  game?: GameStore,
+  record?: RecordStore
 }
 
 @inject("game")
+@inject("record")
 @observer
 export default class Panel extends React.Component<GameProps> {
     webcam : any;
@@ -106,7 +112,6 @@ export default class Panel extends React.Component<GameProps> {
   
     async getImage() {
       const img = await this.webcam.capture();
-      
       const processedImg =
           tf.tidy(() => img.expandDims(0).toFloat().div(127.5).sub(1));
       img.dispose();
@@ -140,8 +145,31 @@ export default class Panel extends React.Component<GameProps> {
       }
     }
   
-    play = () => {
-      this.props.game.restart("snake")
+    async play() {
+      const shot = await this.webcam.capture(); 
+      this.savePlayer(shot);
+      this.props.game.restart("snake");
+    }
+
+    savePlayer = (shot) => {
+      const imageData = new ImageData(WEBCAM_WIDTH, WEBCAM_WIDTH);
+      const data = shot.dataSync();
+      for (let i = 0; i < WEBCAM_HEIGHT * WEBCAM_WIDTH; ++i) {
+        const j = i * 4;
+        imageData.data[j + 0] = data[i * 3 + 0];
+        imageData.data[j + 1] = data[i * 3 + 1];
+        imageData.data[j + 2] = data[i * 3 + 2];
+        imageData.data[j + 3] = 255;
+      }
+      const resizedImage = resizeImageData(imageData, 30, 30, 'biliniear-interpolation');
+      const canvas = document.createElement('canvas') as any;
+      canvas.width = 30;
+      canvas.height = 30;
+      const ctx = canvas.getContext('2d');
+      ctx.putImageData(resizedImage, 0, 0);
+      const dataURL = canvas.toDataURL();
+      record.changePlayer(dataURL);
+      canvas.remove();
     }
 
     render() {

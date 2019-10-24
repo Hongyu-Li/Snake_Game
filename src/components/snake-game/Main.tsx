@@ -3,6 +3,8 @@ import { Snake } from './Snake';
 import { Apple } from './apple';
 import {HEIGHT, WIDTH, CELL_WIDTH, CELL_HEIGHT} from './constant'
 import { game } from '../../GlobalStore';
+import { record } from '../../GlobalStore';
+import { Record } from './Record';
 const WHITE = "rgb(255,255,255)"
 const RED = "rgb(255,0,0)";
 const BLACK = "rgb(0,0,0)";
@@ -61,7 +63,8 @@ export class Main{
 
     end = ():void => {
         clearInterval(this.drawIntervalId);
-        clearInterval(this.collisionIntervalId)
+        clearInterval(this.collisionIntervalId);
+        record.addRecord(new Record(record.player,"snake",this.snake.body.length-1));
         game.quit();
     }
 }

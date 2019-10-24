@@ -47,6 +47,7 @@ export default class GameStore {
 
     @action.bound quit() {
         this.isStart = false;
+        this.Game = null;
     }
 
     gameFactory(game: string): Game {
