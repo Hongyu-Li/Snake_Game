@@ -100,7 +100,7 @@ export default class Panel extends React.Component<GameProps> {
     async loadAddonModel() {
       console.log('Loading model......');
       try {
-        const model = await tf.loadLayersModel("./tfjs_model_95/model.json");
+        const model = await tf.loadLayersModel("./tfjs_model_98/model.json");
         document.getElementById("status").style.display = "none";
         document.getElementById("main").style.display = "block";
         console.log('Done loading pretrained model.');
