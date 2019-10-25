@@ -9,7 +9,7 @@ import * as handTrack from 'handtrackjs';
 import RecordStore from '../stores/recordStore';
 import resizeImageData from 'resize-image-data';
 import { WEBCAM_WIDTH, WEBCAM_HEIGHT } from './snake-game/constant';
-import { record } from '../GlobalStore';
+import { record, game } from '../GlobalStore';
 
 interface GameProps {
   game?: GameStore,
@@ -148,7 +148,7 @@ export default class Panel extends React.Component<GameProps> {
     async play() {
       const shot = await this.webcam.capture(); 
       this.savePlayer(shot);
-      this.props.game.restart("snake");
+      this.props.game.restart();
     }
 
     savePlayer = (shot) => {
@@ -193,18 +193,14 @@ export default class Panel extends React.Component<GameProps> {
                     </div>
                 </div>
                 </div>
-                {/* <div className="col-container">
-                  <button className="nes-btn" id="shot">Shot</button>
-                  <button className="nes-btn" onClick={this.play} id="play">Play</button>
-                  <button className="nes-btn" onClick={()=>this.props.game.restart("snake")} id="play">restart</button>
-                </div> */}
-                {/* <canvas id="dummy_canvas" width="224" height="224" ></canvas> */}
                 <div id="instruction" className="nes-container">
                   <h1>Instruction</h1>
                   <p>Step 1: Show your hand in front of camera.</p>
                   <p>Step 2: Turn your head up, down, left and right to control your snake.</p>
                   <p>Step 3: Enjoy the game!</p>
                 </div>
+                <button onClick={()=>game.changeGame(game.game === "snake" ? "Tetris" : "snake")}>Change Game</button>
+                <h5>{game.game}</h5>
             </div>
         )
     }

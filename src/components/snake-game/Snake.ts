@@ -24,7 +24,7 @@ export class Snake {
 
     extend() {
         const last = this.body[this.body.length-1]
-        this.body.push(new Body(last.x, last.y));
+        this.body.push(new Body(last.x-1, last.y-1));
     }
 
     turn = ()=>{
@@ -44,10 +44,10 @@ export class Snake {
 
     handle_keydown = (keyCode: number) => {
         switch(keyCode) {
-            case LEFT: this.changeDirection(DIRECTION.LEFT); break;
-            case UP: this.changeDirection(DIRECTION.UP); break;
-            case RIGHT: this.changeDirection(DIRECTION.RIGHT); break;
-            case DOWN: this.changeDirection(DIRECTION.DOWN); break;
+            case LEFT: (this.direction != DIRECTION.RIGHT || this.body.length === 1) && this.changeDirection(DIRECTION.LEFT); break;
+            case UP: (this.direction != DIRECTION.DOWN || this.body.length === 1) && this.changeDirection(DIRECTION.UP); break;
+            case RIGHT: (this.direction != DIRECTION.LEFT || this.body.length === 1) && this.changeDirection(DIRECTION.RIGHT); break;
+            case DOWN: (this.direction !=  DIRECTION.UP || this.body.length === 1) && this.changeDirection(DIRECTION.DOWN); break;
         }
     }
 

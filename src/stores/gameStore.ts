@@ -1,6 +1,6 @@
 import {observable, action} from 'mobx';
 import {Main as Snake_main} from "../components/snake-game/Main"
-
+import {Main as Tetris_main} from "../components/Tetris/Main"
 interface Game {
     start();
     handle_key(keyCode: number);
@@ -13,10 +13,15 @@ export default class GameStore {
     @observable isStart: boolean = false;
     @observable Game: Game;
 
-    @action.bound start(game: string) {
+    @action.bound start() {
         this.isStart = true;
-        this.Game = this.gameFactory(game);
+        this.Game = this.gameFactory();
         this.Game.start();
+    }
+
+    @action.bound changeGame(name: string) {
+        this.game = name;
+        this.restart();
     }
 
     @action.bound addScore() {
@@ -27,13 +32,13 @@ export default class GameStore {
         this.score = 0;
     }
 
-    @action.bound restart(game: string) {
+    @action.bound restart() {
         if(!this.Game){
-            this.start(game);
+            this.start();
             return;
         }
         this.Game.end();
-        this.Game = this.gameFactory(game);
+        this.Game = this.gameFactory();
         this.Game.start();
         this.isStart = true;
     }
@@ -50,9 +55,10 @@ export default class GameStore {
         this.Game = null;
     }
 
-    gameFactory(game: string): Game {
-        switch(game) {
+    gameFactory(): Game{
+        switch(this.game) {
             case "snake": return new Snake_main();
+            case "Tetris": return new Tetris_main();
         }
         return null;
     }

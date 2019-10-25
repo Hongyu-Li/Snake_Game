@@ -897,6 +897,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@canvas/image-data@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/@canvas/image-data/download/@canvas/image-data-1.0.0.tgz#3bd2cd856e13fc9e2c25feff360a4056857b0367"
+  integrity sha1-O9LNhW4T/J4sJf7/NgpAVoV7A2c=
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -8818,6 +8823,13 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+resize-image-data@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npm.taobao.org/resize-image-data/download/resize-image-data-0.2.0.tgz#1b1be122357ae7cb50bee565fa04f821fbf83ac5"
+  integrity sha1-GxvhIjV658tQvuVl+gT4Ifv4OsU=
+  dependencies:
+    "@canvas/image-data" "^1.0.0"
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

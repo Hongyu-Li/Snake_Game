@@ -36,13 +36,26 @@ export class Main{
                 this.apple.regenerate(0, 0);
             }
             const head = this.snake.body[0];
-            if(head.x < 0 || head.x > WIDTH || head.y < 0 || head.y > HEIGHT) {
+            if(this.died()) {
                 this.ctx.fillStyle = WHITE;
                 this.ctx.font = '20px "Press Start 2P"';
                 this.ctx.fillText("Hands Up to Restart", 150, 250);
                 this.end();
             }
         }, 5)
+    }
+
+    died = () => {
+        const head = this.snake.body[0];
+        if(head.x < 0 || head.x > WIDTH || head.y < 0 || head.y > HEIGHT) {
+            return true;
+        }
+        for(let i = 1; i < this.snake.body.length; ++i) {
+            if(head.x === this.snake.body[i].x && head.y === this.snake.body[i].y) {
+                return true;
+            }
+        }
+        return false;
     }
 
     handle_key = (keyCode: number): void => {
