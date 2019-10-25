@@ -39,7 +39,7 @@ export default class Rank extends React.Component<RecordProps> {
               </tr>)
             })}
             </tbody>
-        </table>:<span className="nes-text">Hi</span>}  
+        </table>:<span className="nes-text">Ready To Be The Top One?</span>}  
           </div>
       </section>
     );

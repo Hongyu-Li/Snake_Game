@@ -67,3 +67,19 @@ margin: 15px;
 .col-container {
     display: flex;
 }
+
+#instruction {
+    height: 45%;
+    margin-top: 10px;
+}
+
+#instruction > p {
+    text-align: left;
+    font-size: 12px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+#instruction > h1 {
+    font-size: 20px;
+}

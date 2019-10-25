@@ -193,12 +193,18 @@ export default class Panel extends React.Component<GameProps> {
                     </div>
                 </div>
                 </div>
-                <div className="col-container">
+                {/* <div className="col-container">
                   <button className="nes-btn" id="shot">Shot</button>
                   <button className="nes-btn" onClick={this.play} id="play">Play</button>
                   <button className="nes-btn" onClick={()=>this.props.game.restart("snake")} id="play">restart</button>
+                </div> */}
+                {/* <canvas id="dummy_canvas" width="224" height="224" ></canvas> */}
+                <div id="instruction" className="nes-container">
+                  <h1>Instruction</h1>
+                  <p>Step 1: Show your hand in front of camera.</p>
+                  <p>Step 2: Turn your head up, down, left and right to control your snake.</p>
+                  <p>Step 3: Enjoy the game!</p>
                 </div>
-                <canvas id="dummy_canvas" width="224" height="224" ></canvas>
             </div>
         )
     }
