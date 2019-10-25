@@ -1,11 +1,11 @@
 # Snake Game
 
-Are you working in a sitting position right now? Feeling pains about your stiff neck and tight shoulders? If so, you're gonna love our game! <br/>
-Now go to https://snake.tensor-game.tk/ and have a relax! 
+Are you working in a sitting position right now? Feeling pains about your stiff neck and tight shoulders? If so, you're gonna love our game! Now go to https://snake.tensor-game.tk/ and have a relax! 
 
 
 ## How to play? 
-In this game, you have to use your head gestures to guide the snake to gain score as high as possible like this: 👇👇👇👇(A big thank you to our demo tester @Hongyu-Li)
+In this game, you have to use your head gestures to guide the snake to gain score as high as possible like this: <br/>
+👇👇👇👇(A big THANK YOU to our demo tester [@codingwesley](https://github.com/codingwesley))
 ![demo](https://github.com/Hongyu-Li/Snake_Game/blob/master/figs/demo.gif)
 
 Got interested? Four steps to start playing quickly:
@@ -36,7 +36,7 @@ This demo was inspired by tensorflowjs [Pac-Man demo](https://www.tensorflow.org
 - [ ] Prettier UI
 
 
-## Core Development Members
+## Core Members
 <a href="https://github.com/TokenJan">
     <img src="https://avatars2.githubusercontent.com/u/11611658?s=400&v=4" width="45px">
 </a>
