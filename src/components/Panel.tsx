@@ -177,6 +177,7 @@ export default class Panel extends React.Component<GameProps> {
             <div id="game-panel">
                 <div id="webcam-controller">
                     <video autoPlay playsInline muted id="webcam" width="224" height="224"></video>
+                    <span className='reference'>+</span>
                 <div id="direction-panel">
                     <div id="top-panel">
                         <span className="fill"></span>
@@ -195,9 +196,10 @@ export default class Panel extends React.Component<GameProps> {
                 </div>
                 <div id="instruction" className="nes-container">
                   <h1>Instruction</h1>
-                  <p>Step 1: Show your hand in front of camera.</p>
-                  <p>Step 2: Turn your head up, down, left and right to control your snake.</p>
-                  <p>Step 3: Enjoy the game!</p>
+                  <p>Step 1: Place your head in the middle of camera.</p>
+                  <p>Step 2: Show your hand in front of camera.</p>
+                  <p>Step 3: Turn your head up, down, left and right to control your snake.</p>
+                  <p>Step 4: Enjoy the game!</p>
                 </div>
                 <button onClick={()=>game.changeGame(game.game === "snake" ? "Tetris" : "snake")}>Change Game</button>
                 <h5>{game.game}</h5>

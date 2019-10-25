@@ -71,19 +71,28 @@ margin: 15px;
 }
 
 #instruction {
-    height: 53%;
+    height: 48%;
     width: 105%;
-    margin-top: 30px;
+    margin-top: 10px;
     padding: 10px;
 }
 
 #instruction > p {
     text-align: left;
     font-size: 15px;
-    margin: 20px 0 0 0;
+    margin: 10px 0 0 0;
 }
 
 #instruction > h1 {
     font-size: 20px;
-    margin-top: 5%;
+    margin-top: 5px;
+}
+
+.reference {
+    font-size: 20px;
+    color: whitesmoke;
+    position: relative;
+    margin: 0;
+    left: -120px;
+    top: 100px;
 }
