@@ -35,6 +35,29 @@ export default class App extends React.Component {
               <Game/>
               <Panel/>
             </div>
+            <section className="topic">
+              <h3 className="topic-title"><i className="nes-icon star"></i>Core Team Members</h3>
+              <div className="coreteam-members">
+                <section className="nes-container is-dark member-card">
+                  <div className="avatar">
+                    <img alt="Core Member Hongyu Li" className="" src="https://github.com/Hongyu-Li.png?size=80"/>
+                  </div>
+                  <div className="profile"><h4 className="name">Hongyu Li</h4><div><a href="https://github.com/Hongyu-Li" target="_blank" rel="noopener" aria-label="github"><i className="nes-icon github"></i></a></div></div>
+                </section>
+                <section className="nes-container is-dark member-card">
+                  <div className="avatar">
+                    <img alt="Core Member Jiale Lv" className="" src="https://github.com/Amuro1997.png?size=80"/>
+                  </div>
+                  <div className="profile"><h4 className="name">Jiale Lv</h4><div><a href="https://github.com/Amuro1997" target="_blank" rel="noopener" aria-label="github"><i className="nes-icon github"></i></a></div></div>
+                </section>
+                <section className="nes-container is-dark member-card">
+                  <div className="avatar">
+                    <img alt="Core Member Jiahuan Yang" className="" src="https://github.com/TokenJan.png?size=80"/>
+                  </div>
+                  <div className="profile"><h4 className="name">Jiahuan Yang</h4><div><a href="https://github.com/TokenJan" target="_blank" rel="noopener" aria-label="github"><i className="nes-icon github"></i></a></div></div>
+                </section>
+              </div>
+            </section>
           </div>
         </Provider>
       </div>
