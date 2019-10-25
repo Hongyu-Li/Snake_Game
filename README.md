@@ -1,11 +1,20 @@
 # Snake Game
 
-Are you working in a sitting position right now? Feeling pains about your stiff neck and tight shoulders? If so, you're gonna love our game! 
+Are you working in a sitting position right now? Feeling pains about your stiff neck and tight shoulders? If so, you're gonna love our game! <br/>
+Now go to https://snake.tensor-game.tk/ and have a relax! 
 
 
 ## How to play? 
+In this game, you have to use your head gestures to guide the snake to gain score as high as possible like this: 👇👇👇👇(A big thank you to our demo tester @Hongyu-Li)
+![demo](https://github.com/Hongyu-Li/Snake_Game/blob/master/figs/demo.gif)
 
-In this game, you have to use your head gestures to guide the snake to gain score as high as possible like this: 👇👇👇👇
+Got interested? Four steps to start playing quickly:
+* Step 1: Put your nose on the '+' of camera. 
+* Step 2: Show your hand in front of camera to start/restart the game. 
+* Step 3: Turn your head up, down, left and right to control your snake. 
+* Step 4: Enjoy the game!
+
+[BOUNUS] Notice `Change Game` button at the bottom of the instruction page? Click it and try to use your head to play **Tetris**.
 
 
 ## Development Environment
