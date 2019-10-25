@@ -6,6 +6,7 @@ Are you working in a sitting position right now? Feeling pains about your stiff 
 ## How to play? 
 In this game, you have to use your head gestures to guide the snake to gain score as high as possible like this: <br/>
 👇👇👇👇(A big THANK YOU to our demo tester [@codingwesley](https://github.com/codingwesley))
+<br/>
 ![demo](https://github.com/Hongyu-Li/Snake_Game/blob/master/figs/demo.gif)
 
 Got interested? Four steps to start playing quickly:
