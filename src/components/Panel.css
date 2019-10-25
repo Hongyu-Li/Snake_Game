@@ -8,19 +8,21 @@ text-align: left;
 }
 
 #webcam-controller {
-display: flex;
-margin-top: 20px;
-justify-content: space-between;
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
 }
 
 .scroll-btn > span {
-display: block;
-transform: rotateZ(90deg);
+    display: block;
+    transform: rotateZ(90deg);
 }
 
 #direction-panel {
 display: flex;
 flex-direction: column;
+margin-left: 5%;
+margin-top: 7%;
 }
 
 #top-panel {
@@ -69,17 +71,19 @@ margin: 15px;
 }
 
 #instruction {
-    height: 45%;
-    margin-top: 10px;
+    height: 53%;
+    width: 105%;
+    margin-top: 30px;
+    padding: 10px;
 }
 
 #instruction > p {
     text-align: left;
-    font-size: 12px;
-    margin-top: 20px;
-    margin-bottom: 0px;
+    font-size: 15px;
+    margin: 20px 0 0 0;
 }
 
 #instruction > h1 {
     font-size: 20px;
+    margin-top: 5%;
 }
