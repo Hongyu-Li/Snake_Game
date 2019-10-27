@@ -35,11 +35,10 @@ export class Main{
                 this.snake.extend();
                 this.apple.regenerate(0, 0);
             }
-            const head = this.snake.body[0];
             if(this.died()) {
                 this.ctx.fillStyle = WHITE;
                 this.ctx.font = '20px "Press Start 2P"';
-                this.ctx.fillText("Hands Up to Restart", 150, 250);
+                this.ctx.fillText("Hands Up to Restart", 300, 250);
                 this.end();
             }
         }, 5)

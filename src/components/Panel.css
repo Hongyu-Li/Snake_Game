@@ -91,3 +91,8 @@ margin: 15px;
     left: -120px;
     top: 100px;
 }
+
+#canvas {
+    width: 100%;
+    height: 100%;
+}

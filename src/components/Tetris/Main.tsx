@@ -38,7 +38,7 @@ class Block {
             for(let y = 0; y < 4; ++y) {
                 if(shape[x][y] <= 0){continue;}
                 if(this.x + x + x_off >= data.length || this.y + y + y_off >= data[0].length){return true;}
-                if(data[this.x+x+x_off][this.y+y+y_off] != 0){return true;}
+                if(data[this.x+x+x_off][this.y+y+y_off] !== 0){return true;}
             }
         }
         return false;
@@ -48,7 +48,7 @@ class Block {
         const shape = this.Block_data[this.direction];
         for(let x = 0; x < 4; ++x) {
             for(let y = 0; y < 4; ++y) {
-                if(shape[x][y] != 0) {
+                if(shape[x][y] !== 0) {
                     data[this.x+x][this.y+y] = type;
                 }
             }
@@ -65,8 +65,8 @@ class Block {
             }
             TURN = false;
         }
-        if(MOVE != 0) {
-            if(MOVE == 1) {
+        if(MOVE !== 0) {
+            if(MOVE === 1) {
                 will_touch = this.willTouch(data,0,-1, this.direction);
                 if(!will_touch) {this.y -= 1;}
             } else {
@@ -148,8 +148,8 @@ export class Main {
     handle_key = (keyCode: Number) => {
         console.log(keyCode)
         switch(keyCode) {
-            case DIRECTION.LEFT: MOVE == 0 && (MOVE = 1);break;
-            case DIRECTION.RIGHT: MOVE == 0 && (MOVE = 2); break;
+            case DIRECTION.LEFT: MOVE === 0 && (MOVE = 1);break;
+            case DIRECTION.RIGHT: MOVE === 0 && (MOVE = 2); break;
             case DIRECTION.UP: TURN = true; break;
         }
     }

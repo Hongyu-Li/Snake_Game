@@ -195,7 +195,7 @@ export default class Panel extends React.Component<GameProps> {
                 </div>
                 </div>
                 <div id="instruction" className="nes-container">
-                  <h1><i className="snes-jp-logo is-small"></i>Instruction</h1>
+                  <h1><i className="snes-jp-logo is-small"></i> Instruction</h1>
                   <p>Step 1: Place your head in the middle of camera.</p>
                   <p>Step 2: Show your hand in front of camera.</p>
                   <p>Step 3: Turn your head up, down, left and right to control your snake.</p>
