@@ -15,7 +15,7 @@ export default class App extends React.Component {
     this.ctx = (document.getElementById("canvas") as any).getContext("2d");
     this.ctx.fillStyle =  "rgb(0,0,0)"
     this.ctx.font = '30px "Press Start 2P"';
-    this.ctx.fillText("Show Your Hand", 300, 250);
+    this.ctx.fillText("Show Your Hand", 180, 250);
   }
 
   render() {

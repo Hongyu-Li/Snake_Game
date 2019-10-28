@@ -38,7 +38,7 @@ export class Main{
             if(this.died()) {
                 this.ctx.fillStyle = WHITE;
                 this.ctx.font = '20px "Press Start 2P"';
-                this.ctx.fillText("Hands Up to Restart", 300, 250);
+                this.ctx.fillText("Hands Up to Restart", 180, 250);
                 this.end();
             }
         }, 5)
